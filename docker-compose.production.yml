@@ -1,0 +1,40 @@
+version: '3'
+
+volumes:
+  pg_data:
+  static:
+  media:
+
+services:
+  db:
+    image: postgres:13.10
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  backend:
+    image: gleb60/kittygram_backend
+    env_file: .env
+    depends_on:
+      - db
+    volumes:
+      - static:/backend_static
+      - media:/app/media/
+
+  frontend:
+    image: gleb60/kittygram_frontend
+    command: cp -r /app/build/. /frontend_static/
+    depends_on:
+      - backend
+    volumes:
+      - static:/frontend_static
+
+  gateway:
+    image: gleb60/kittygram_gateway
+    depends_on:
+      - frontend
+    ports:
+      - 9000:80
+    volumes:
+      - static:/static/
+      - media:/app/media/
