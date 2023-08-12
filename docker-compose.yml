@@ -30,7 +30,7 @@ services:
       - static:/frontend_static/
 
   gateway:
-    build: ./nginx/
+    build: ./gateway/
     volumes:
       - static:/static/
       - media:/media/
