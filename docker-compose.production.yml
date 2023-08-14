@@ -19,7 +19,7 @@ services:
       - db
     volumes:
       - static:/backend_static
-      - media:/app/media/
+      - media:/media
 
   frontend:
     image: gleb60/kittygram_frontend
@@ -37,4 +37,4 @@ services:
       - 9000:80
     volumes:
       - static:/static/
-      - media:/app/media/
+      - media:/media
